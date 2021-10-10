@@ -4,6 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { Item } from './item/entities/item.entity';
+import { WarehouseModule } from './warehouse/warehouse.module';
+import { Warehouse } from './warehouse/entities/warehouse.entity';
 
 @Module({
   imports: [
@@ -18,9 +20,11 @@ import { Item } from './item/entities/item.entity';
       username: '',
       password: '',
       database: '',
-      entities: [Item],
+      entities: [Item, Warehouse],
+      // entities: ['/**/*.entity(.ts,.js)'],
       synchronize: true,
     }),
+    WarehouseModule,
   ],
   controllers: [],
   providers: [],

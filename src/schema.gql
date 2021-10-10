@@ -7,14 +7,33 @@ type Item {
   title: String!
 }
 
+type Warehouse {
+  id: String!
+  name: String!
+}
+
 type Query {
   findAllItems: [Item!]!
+  getAllWarehouse: [Warehouse!]!
+  getOneWarehouse(id: String!): Warehouse!
 }
 
 type Mutation {
   createItem(item: CreateItemDTO!): Item!
+  createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
+  updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
+  removeWarehouse(id: String!): Warehouse!
 }
 
 input CreateItemDTO {
   title: String!
+}
+
+input CreateWarehouseInput {
+  name: String!
+}
+
+input UpdateWarehouseInput {
+  id: String!
+  name: String!
 }

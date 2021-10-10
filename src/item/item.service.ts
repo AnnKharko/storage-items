@@ -14,7 +14,7 @@ export class ItemService {
     return this.itemRepository.find();
   }
 
-  findOne(id: string): Promise<Item> {
+  async findOne(id: string): Promise<Item> {
     return this.itemRepository.findOne(id);
   }
 
