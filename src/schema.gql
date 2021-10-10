@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Item {
+  id: String!
+  title: String!
+}
+
+type Query {
+  findAllItems: [Item!]!
+}
+
+type Mutation {
+  createItem(item: CreateItemDTO!): Item!
+}
+
+input CreateItemDTO {
+  title: String!
+}
