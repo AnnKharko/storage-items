@@ -12,6 +12,11 @@ export class ItemResolver {
     return this.itemService.findAll();
   }
 
+  @Query(() => Item)
+  findOne(@Args('id') id: string) {
+    return this.itemService.findOne(id);
+  }
+
   @Mutation(() => Item, { name: 'createItem' })
   create(@Args('item') item: CreateItemDTO) {
     return this.itemService.create(item);

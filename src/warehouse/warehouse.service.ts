@@ -26,11 +26,15 @@ export class WarehouseService {
   }
 
   update(id: string, warehouse: UpdateWarehouseInput) {
-    return `This action updates a #${id} warehouse`;
+    const wh: Warehouse = this.warehouseRepository.create(warehouse);
+    wh.id = id;
+    return this.warehouseRepository.save(wh);
+    // const updated = await this.warehouseRepository.update(id, warehouse);
+    // return updated;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} warehouse`;
-    // return this.warehouseRepository.remove(id);
+  async remove(id: string) {
+    // return `This action removes a #${id} warehouse`;
+    await this.warehouseRepository.delete(id);
   }
 }
