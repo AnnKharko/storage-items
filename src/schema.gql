@@ -2,14 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Item {
-  id: String!
-  title: String!
-}
-
 type Warehouse {
   id: String!
   name: String!
+}
+
+type ItemWarehouse {
+  id: String!
+  warehouseId: String!
+  itemId: String!
+  count: Float!
+  item: Item!
+  warehouse: Warehouse!
+}
+
+type Item {
+  id: String!
+  title: String!
+  item_wh: [Warehouse!]
 }
 
 type Query {
@@ -17,6 +27,7 @@ type Query {
   findOne(id: String!): Item!
   getAllWarehouse: [Warehouse!]!
   getOneWarehouse(id: String!): Warehouse!
+  findItemWarehouse(id: String!): ItemWarehouse!
 }
 
 type Mutation {
@@ -24,6 +35,7 @@ type Mutation {
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
   removeWarehouse(id: String!): Warehouse!
+  createItemWarehouse(itemWarehouse: CreateItemWarehouseDTO!): ItemWarehouse!
 }
 
 input CreateItemDTO {
@@ -37,4 +49,10 @@ input CreateWarehouseInput {
 input UpdateWarehouseInput {
   id: String!
   name: String!
+}
+
+input CreateItemWarehouseDTO {
+  warehouseId: String!
+  itemId: String!
+  count: Float!
 }

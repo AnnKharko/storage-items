@@ -11,7 +11,10 @@ export class ItemService {
   ) {}
 
   async findAll(): Promise<Item[]> {
-    return this.itemRepository.find();
+    return this.itemRepository
+      .createQueryBuilder()
+      .leftJoinAndSelect('item.item_wh', 'item_warehouses')
+      .getMany();
   }
 
   async findOne(id: string): Promise<Item> {
