@@ -2,14 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Warehouse {
+  id: String!
+  name: String!
+}
+
+type ItemWarehouse {
+  id: String!
+  warehouseId: String!
+  itemId: String!
+  count: Float!
+  item: Item
+  warehouse: Warehouse
+}
+
 type Item {
   id: String!
   title: String!
 }
 
-type Warehouse {
-  id: String!
-  name: String!
+type SendDto {
+  message: String
+  status: Int
 }
 
 type Query {
@@ -17,16 +31,29 @@ type Query {
   findOne(id: String!): Item!
   getAllWarehouse: [Warehouse!]!
   getOneWarehouse(id: String!): Warehouse!
+  findItemWarehouse(id: String!): ItemWarehouse!
+  findAllItemWarehouse: [ItemWarehouse!]!
+  findWarehouseWithAllItems(id: String!): [ItemWarehouse!]!
 }
 
 type Mutation {
   createItem(item: CreateItemDTO!): Item!
+  updateItem(updateItem: UpdateItemInputDTO!): Item!
+  deleteItem(id: String!): SendDto!
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
-  removeWarehouse(id: String!): Warehouse!
+  deleteWarehouse(id: String!): SendDto!
+  createItemWarehouse(itemWarehouse: CreateItemWarehouseDTO!): ItemWarehouse!
+  updateItemWarehouse(updateItemWarehouse: UpdateItemWarehouseDTO!): ItemWarehouse!
+  deleteItemWarehouse(id: String!): SendDto!
 }
 
 input CreateItemDTO {
+  title: String!
+}
+
+input UpdateItemInputDTO {
+  id: String!
   title: String!
 }
 
@@ -37,4 +64,17 @@ input CreateWarehouseInput {
 input UpdateWarehouseInput {
   id: String!
   name: String!
+}
+
+input CreateItemWarehouseDTO {
+  warehouseId: String!
+  itemId: String!
+  count: Float!
+}
+
+input UpdateItemWarehouseDTO {
+  id: String!
+  warehouseId: String
+  itemId: String
+  count: Float
 }
