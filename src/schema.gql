@@ -12,14 +12,18 @@ type ItemWarehouse {
   warehouseId: String!
   itemId: String!
   count: Float!
-  item: Item!
-  warehouse: Warehouse!
+  item: Item
+  warehouse: Warehouse
 }
 
 type Item {
   id: String!
   title: String!
-  item_wh: [Warehouse!]
+}
+
+type SendDto {
+  message: String
+  status: Int
 }
 
 type Query {
@@ -28,17 +32,28 @@ type Query {
   getAllWarehouse: [Warehouse!]!
   getOneWarehouse(id: String!): Warehouse!
   findItemWarehouse(id: String!): ItemWarehouse!
+  findAllItemWarehouse: [ItemWarehouse!]!
+  findWarehouseWithAllItems(id: String!): [ItemWarehouse!]!
 }
 
 type Mutation {
   createItem(item: CreateItemDTO!): Item!
+  updateItem(updateItem: UpdateItemInputDTO!): Item!
+  deleteItem(id: String!): SendDto!
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
-  removeWarehouse(id: String!): Warehouse!
+  deleteWarehouse(id: String!): SendDto!
   createItemWarehouse(itemWarehouse: CreateItemWarehouseDTO!): ItemWarehouse!
+  updateItemWarehouse(updateItemWarehouse: UpdateItemWarehouseDTO!): ItemWarehouse!
+  deleteItemWarehouse(id: String!): SendDto!
 }
 
 input CreateItemDTO {
+  title: String!
+}
+
+input UpdateItemInputDTO {
+  id: String!
   title: String!
 }
 
@@ -55,4 +70,11 @@ input CreateItemWarehouseDTO {
   warehouseId: String!
   itemId: String!
   count: Float!
+}
+
+input UpdateItemWarehouseDTO {
+  id: String!
+  warehouseId: String
+  itemId: String
+  count: Float
 }

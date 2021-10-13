@@ -30,13 +30,13 @@ export class ItemWarehouse {
 
   @ManyToOne(() => Item, (item) => item.item_wh, { primary: true })
   @JoinColumn({ name: 'itemId' })
-  @Field(() => Item)
+  @Field(() => Item, { nullable: true })
   item: Item;
 
-  @ManyToOne(() => Warehouse, (warehouse) => warehouse.itemConnection, {
+  @ManyToOne(() => Warehouse, (warehouse) => warehouse.wh_item, {
     primary: true,
   })
   @JoinColumn({ name: 'warehouseId' })
-  @Field(() => Warehouse)
+  @Field(() => Warehouse, { nullable: true })
   warehouse: Warehouse;
 }

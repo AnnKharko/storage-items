@@ -3,6 +3,7 @@ import { WarehouseService } from './warehouse.service';
 import { Warehouse } from './entities/warehouse.entity';
 import { CreateWarehouseInput } from './dto/create-warehouse.input';
 import { UpdateWarehouseInput } from './dto/update-warehouse.input';
+import { SendDto } from '../send.dto';
 
 @Resolver(() => Warehouse)
 export class WarehouseResolver {
@@ -23,12 +24,12 @@ export class WarehouseResolver {
     return this.warehouseService.findOne(id);
   }
 
-  @Mutation(() => Warehouse)
+  @Mutation(() => Warehouse, { name: 'updateWarehouse' })
   updateWarehouse(@Args('warehouse') warehouse: UpdateWarehouseInput) {
-    return this.warehouseService.update(warehouse.id, warehouse);
+    return this.warehouseService.update(warehouse);
   }
 
-  @Mutation(() => Warehouse)
+  @Mutation(() => SendDto, { name: 'deleteWarehouse' })
   removeWarehouse(@Args('id') id: string) {
     return this.warehouseService.remove(id);
   }
