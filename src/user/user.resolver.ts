@@ -3,7 +3,7 @@ import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user';
 import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from '../auth/auth.guard';
+import { AuthGuard } from '../auth/guards/auth.guard';
 
 @Resolver(() => User)
 export class UserResolver {

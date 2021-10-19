@@ -8,13 +8,13 @@ import { RefreshDto } from './dto/refresh.dto';
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  @Mutation(() => Auth, { name: 'userLogin' })
-  loginUser(@Args('login') login: LoginDto) {
-    return this.authService.createTokens(login);
-  }
-
-  @Mutation(() => Auth, { name: 'refreshTokens' })
-  refreshTokens(@Args('refresh_token') refresh_token: string) {
-    return this.authService.refreshTokens(refresh_token);
-  }
+  // @Mutation(() => Auth, { name: 'userLogin' })
+  // loginUser(@Args('login') login: LoginDto) {
+  //   return this.authService.createTokens(login);
+  // }
+  //
+  // @Mutation(() => Auth, { name: 'refreshTokens' })
+  // refreshTokens(@Args('refresh_token') refresh_token: string) {
+  //   return this.authService.refreshTokens(refresh_token);
+  // }
 }
