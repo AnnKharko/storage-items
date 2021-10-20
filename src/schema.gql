@@ -12,11 +12,26 @@ type Warehouse {
   name: String!
 }
 
+type User {
+  """Example field (placeholder)"""
+  exampleField: Int!
+  id: String!
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+  role: String!
+  status: String!
+}
+
 type Query {
   findAllItems: [Item!]!
   findOne(id: String!): Item!
   getAllWarehouse: [Warehouse!]!
   getOneWarehouse(id: String!): Warehouse!
+  findAllUsers: [User!]!
+  findUser(id: String!): User!
+  findUserByEmail(email: String!): User!
 }
 
 type Mutation {
@@ -24,6 +39,9 @@ type Mutation {
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
   removeWarehouse(id: String!): Warehouse!
+  createUser(user: CreateUserDto!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
 }
 
 input CreateItemDTO {
@@ -37,4 +55,21 @@ input CreateWarehouseInput {
 input UpdateWarehouseInput {
   id: String!
   name: String!
+}
+
+input CreateUserDto {
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+  role: String!
+}
+
+input UpdateUserInput {
+  name: String
+  gender: String
+  email: String
+  password: String
+  role: String
+  id: Int!
 }
