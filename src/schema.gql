@@ -7,11 +7,6 @@ type Item {
   title: String!
 }
 
-type Warehouse {
-  id: String!
-  name: String!
-}
-
 type User {
   """Example field (placeholder)"""
   exampleField: Int!
@@ -24,37 +19,55 @@ type User {
   status: String!
 }
 
+type Auth {
+  id: String!
+  access_token: String!
+  refresh_token: String!
+  userId: String!
+  user: User!
+}
+
+type SendDto {
+  message: String
+  status: Int
+}
+
+type Warehouse {
+  id: String!
+  name: String!
+}
+
 type Query {
   findAllItems: [Item!]!
-  findOne(id: String!): Item!
-  getAllWarehouse: [Warehouse!]!
-  getOneWarehouse(id: String!): Warehouse!
+  findItem(id: String!): Item!
   findAllUsers: [User!]!
   findUser(id: String!): User!
   findUserByEmail(email: String!): User!
+  getAllWarehouse: [Warehouse!]!
+  getOneWarehouse(id: String!): Warehouse!
 }
 
 type Mutation {
   createItem(item: CreateItemDTO!): Item!
+  login(loginDto: LoginDto!): Auth!
+  registration(userDto: CreateUserDto!): Auth!
+  refreshTokens: Auth!
+  logout: SendDto!
+  createUser(user: CreateUserDto!): User!
+  updateUser(updateUser: UpdateUserDto!): User!
+  removeUser(id: Float!): User!
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
   removeWarehouse(id: String!): Warehouse!
-  createUser(user: CreateUserDto!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
 }
 
 input CreateItemDTO {
   title: String!
 }
 
-input CreateWarehouseInput {
-  name: String!
-}
-
-input UpdateWarehouseInput {
-  id: String!
-  name: String!
+input LoginDto {
+  email: String!
+  password: String!
 }
 
 input CreateUserDto {
@@ -65,11 +78,20 @@ input CreateUserDto {
   role: String!
 }
 
-input UpdateUserInput {
+input UpdateUserDto {
   name: String
   gender: String
   email: String
   password: String
   role: String
   id: Int!
+}
+
+input CreateWarehouseInput {
+  name: String!
+}
+
+input UpdateWarehouseInput {
+  id: String!
+  name: String!
 }

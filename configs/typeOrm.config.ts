@@ -6,6 +6,7 @@ import { Item } from '../src/item/entities/item.entity';
 import { Warehouse } from '../src/warehouse/entities/warehouse.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from '../src/user/entities/user.entity';
+import { Auth } from '../src/auth/entities/auth.entity';
 
 export default class TypeOrmConfig {
   static getOrmConfig(configureService: ConfigService): TypeOrmModuleOptions {
@@ -16,7 +17,7 @@ export default class TypeOrmConfig {
       username: configureService.get('USERNAME'),
       database: configureService.get('DATABASE'),
       password: configureService.get('PASSWORD'),
-      entities: [Item, Warehouse, User],
+      entities: [Item, Warehouse, User, Auth],
       // entities: ['/**/*.entity(.ts,.js)'],
       synchronize: true,
       logging: true,
