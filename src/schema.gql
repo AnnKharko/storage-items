@@ -26,14 +26,34 @@ type SendDto {
   status: Int
 }
 
+type User {
+  id: String!
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+}
+
+type Auth {
+  id: String!
+  access_token: String!
+  refresh_token: String!
+  userId: String!
+  user: User!
+}
+
 type Query {
   findAllItems: [Item!]!
-  findOne(id: String!): Item!
+  findItem(id: String!): Item!
   getAllWarehouse: [Warehouse!]!
   getOneWarehouse(id: String!): Warehouse!
   findItemWarehouse(id: String!): ItemWarehouse!
   findAllItemWarehouse: [ItemWarehouse!]!
   findWarehouseWithAllItems(id: String!): [ItemWarehouse!]!
+  findAllUsers: [User!]!
+  findUser(id: String!): User!
+  findUserByEmail(email: String!): User!
+  me: User!
 }
 
 type Mutation {
@@ -46,6 +66,9 @@ type Mutation {
   createItemWarehouse(itemWarehouse: CreateItemWarehouseDTO!): ItemWarehouse!
   updateItemWarehouse(updateItemWarehouse: UpdateItemWarehouseDTO!): ItemWarehouse!
   deleteItemWarehouse(id: String!): SendDto!
+  createUser(user: CreateUserDto!): User!
+  userLogin(login: LoginDto!): Auth!
+  refreshTokens(refresh_token: String!): Auth!
 }
 
 input CreateItemDTO {
@@ -77,4 +100,16 @@ input UpdateItemWarehouseDTO {
   warehouseId: String
   itemId: String
   count: Float
+}
+
+input CreateUserDto {
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+}
+
+input LoginDto {
+  email: String!
+  password: String!
 }
