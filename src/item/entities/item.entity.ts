@@ -1,8 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ItemWarehouse } from '../../item-warehouse/entities/itemWarehouse.entity';
 
 @ObjectType()
-@Entity()
+@Entity('item')
 export class Item {
   @Field()
   @PrimaryGeneratedColumn('uuid')
@@ -11,4 +12,11 @@ export class Item {
   @Field()
   @Column()
   title: string;
+
+  // @Field(() => [Warehouse], { nullable: true })
+  @OneToMany(() => ItemWarehouse, (iw) => iw.warehouse, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  item_wh: ItemWarehouse[];
 }
