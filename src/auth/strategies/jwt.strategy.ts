@@ -40,15 +40,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (bearer !== 'Bearer') {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }
-    await jwt.verify(
-      token,
-      this.configService.get('JWT_ACCESS_SECRET'),
-      (err) => {
-        if (err) {
-          throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
-        }
-      },
-    );
+    // await jwt.verify(
+    //   token,
+    //   this.configService.get('JWT_ACCESS_SECRET'),
+    //   (err) => {
+    //     if (err) {
+    //       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+    //     }
+    //   },
+    // );
 
     const tokens = await this.authService.tokensExist(token, 'access_token');
 

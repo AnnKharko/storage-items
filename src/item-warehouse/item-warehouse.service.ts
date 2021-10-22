@@ -15,7 +15,7 @@ export class ItemWarehouseService {
   ) {}
 
   async getAllItemWarehouses() {
-    return this.itemWareHouseRepository.find({
+    return await this.itemWareHouseRepository.find({
       relations: ['item', 'warehouse'],
     });
   }

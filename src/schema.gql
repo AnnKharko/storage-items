@@ -21,6 +21,11 @@ type Item {
   title: String!
 }
 
+type SendDto {
+  message: String
+  status: Int
+}
+
 type User {
   """Example field (placeholder)"""
   exampleField: Int!
@@ -31,33 +36,6 @@ type User {
   password: String!
   role: String!
   status: String!
-}
-
-type Auth {
-  id: String!
-  access_token: String!
-  refresh_token: String!
-  userId: String!
-  user: User!
-}
-
-type SendDto {
-  message: String
-  status: Int
-}
-
-type Warehouse {
-type SendDto {
-  message: String
-  status: Int
-}
-
-type User {
-  id: String!
-  name: String!
-  gender: String!
-  email: String!
-  password: String!
 }
 
 type Auth {
@@ -79,14 +57,12 @@ type Query {
   findItemWarehouse(id: String!): ItemWarehouse!
   findAllItemWarehouse: [ItemWarehouse!]!
   findWarehouseWithAllItems(id: String!): [ItemWarehouse!]!
-  findAllUsers: [User!]!
-  findUser(id: String!): User!
-  findUserByEmail(email: String!): User!
-  me: User!
 }
 
 type Mutation {
   createItem(item: CreateItemDTO!): Item!
+  updateItem(updateItem: UpdateItemInputDTO!): Item!
+  deleteItem(id: String!): SendDto!
   login(loginDto: LoginDto!): Auth!
   registration(userDto: CreateUserDto!): Auth!
   refreshTokens: Auth!
@@ -94,20 +70,20 @@ type Mutation {
   createUser(user: CreateUserDto!): User!
   updateUser(updateUser: UpdateUserDto!): User!
   removeUser(id: Float!): User!
-  updateItem(updateItem: UpdateItemInputDTO!): Item!
-  deleteItem(id: String!): SendDto!
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
   deleteWarehouse(id: String!): SendDto!
   createItemWarehouse(itemWarehouse: CreateItemWarehouseDTO!): ItemWarehouse!
   updateItemWarehouse(updateItemWarehouse: UpdateItemWarehouseDTO!): ItemWarehouse!
   deleteItemWarehouse(id: String!): SendDto!
-  createUser(user: CreateUserDto!): User!
-  userLogin(login: LoginDto!): Auth!
-  refreshTokens(refresh_token: String!): Auth!
 }
 
 input CreateItemDTO {
+  title: String!
+}
+
+input UpdateItemInputDTO {
+  id: String!
   title: String!
 }
 
@@ -133,11 +109,6 @@ input UpdateUserDto {
   id: Int!
 }
 
-input UpdateItemInputDTO {
-  id: String!
-  title: String!
-}
-
 input CreateWarehouseInput {
   name: String!
 }
@@ -158,16 +129,4 @@ input UpdateItemWarehouseDTO {
   warehouseId: String
   itemId: String
   count: Float
-}
-
-input CreateUserDto {
-  name: String!
-  gender: String!
-  email: String!
-  password: String!
-}
-
-input LoginDto {
-  email: String!
-  password: String!
 }

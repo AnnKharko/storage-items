@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.input';
-// import { UpdateUserDto } from './dto/update-user.input';
+import { UpdateUserDto } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -31,11 +31,11 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  // async update(id: number, updateUser: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-  //
-  // remove(id: number) {
-  //   return;
-  // }
+  async update(id: number, updateUser: UpdateUserDto) {
+    return `This action updates a #${id} user`;
+  }
+
+  remove(id: number) {
+    return;
+  }
 }

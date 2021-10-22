@@ -9,6 +9,7 @@ import { TokenModule } from './token/token.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { AuthGuard } from './guards/auth.guard';
+import { JwtAuthGuard } from './guards/jwtAuth.guard';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { AuthGuard } from './guards/auth.guard';
     JwtModule.register({}),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  providers: [AuthResolver, AuthService, JwtStrategy, AuthGuard],
-  exports: [AuthService, AuthGuard],
+  providers: [AuthResolver, AuthService, JwtStrategy, AuthGuard, JwtAuthGuard],
+  exports: [AuthService, AuthGuard, JwtAuthGuard],
 })
 export class AuthModule {}

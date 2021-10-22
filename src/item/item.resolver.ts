@@ -5,7 +5,7 @@ import { CreateItemDTO } from './dto/create-item.import';
 import { SendDto } from '../send.dto';
 import { UpdateItemInputDTO } from './dto/update-item.input';
 import { UseGuards } from '@nestjs/common';
-// import { JwtAuthGuard } from '../auth/guards/jwtAuth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwtAuth.guard';
 import { AuthGuard } from '../auth/guards/auth.guard';
 
 @Resolver(() => Item)
@@ -18,9 +18,8 @@ export class ItemResolver {
   }
 
   @Query(() => Item, { name: 'findItem' })
-  @Query(() => Item, { name: 'findItem' })
-  @UseGuards(AuthGuard)
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   findOne(@Args('id') id: string) {
     return this.itemService.findOne(id);
   }
