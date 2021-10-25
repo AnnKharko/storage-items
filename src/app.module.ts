@@ -10,13 +10,16 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ItemWarehouseModule } from './item-warehouse/item-warehouse.module';
 // import { JwtModule } from "@nestjs/jwt";
+import { DevModule } from './dev/dev.module';
+import { AuthorizationModule } from './authorization/authorization.module';
 
 @Module({
   imports: [
     ItemModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      context: ({ req }) => ({ headers: req.headers }),
+      context: ({ req }) => ({ ...req }),
+      // context: ({ req }) => ({ headers: req.headers }),
     }),
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
     ConfigModule.forRoot({
@@ -30,6 +33,8 @@ import { ItemWarehouseModule } from './item-warehouse/item-warehouse.module';
     ItemWarehouseModule,
     UserModule,
     AuthModule,
+    DevModule,
+    AuthorizationModule,
   ],
   controllers: [],
   providers: [],

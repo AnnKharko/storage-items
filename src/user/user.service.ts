@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.input';
-import { UpdateUserDto } from './dto/update-user.input';
+// import { UpdateUserDto } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { passwordHasher } from '../../helper/passwordHasher';
+import { UpdateUserDto } from './dto/update-user.input';
+import { SendDto } from '../send.dto';
 
 @Injectable()
 export class UserService {
@@ -13,29 +15,32 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   async findOne(id: string): Promise<User> {
-    return this.userRepository.findOne(id);
+    return await this.userRepository.findOne(id);
   }
 
   async findUserByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ email });
+    return await this.userRepository.findOne({ email });
   }
 
   async create(createUser: CreateUserDto) {
     const hashPassword = await passwordHasher.hash(createUser.password);
-    const user = this.userRepository.create(createUser);
+    const user = await this.userRepository.create(createUser);
     user.password = hashPassword;
-    return this.userRepository.save(user);
+    return await this.userRepository.save(user);
   }
 
-  async update(id: number, updateUser: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(updateUser: UpdateUserDto) {
+    return await this.userRepository.update(updateUser.id, { ...updateUser });
   }
 
-  remove(id: number) {
-    return;
+  async remove(id: number): Promise<SendDto> {
+    await this.userRepository.delete(id);
+    return {
+      message: `User with id ${id} was deleted`,
+    };
   }
 }

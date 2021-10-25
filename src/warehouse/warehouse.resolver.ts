@@ -4,6 +4,8 @@ import { Warehouse } from './entities/warehouse.entity';
 import { CreateWarehouseInput } from './dto/create-warehouse.input';
 import { UpdateWarehouseInput } from './dto/update-warehouse.input';
 import { SendDto } from '../send.dto';
+import { UseGuards } from '@nestjs/common';
+import { DevJwtGuard } from '../authorization/guards/dev.jwt.guard';
 
 @Resolver(() => Warehouse)
 export class WarehouseResolver {
@@ -15,6 +17,7 @@ export class WarehouseResolver {
   }
 
   @Query(() => [Warehouse], { name: 'getAllWarehouse' })
+  @UseGuards(DevJwtGuard)
   findAll() {
     return this.warehouseService.findAll();
   }
