@@ -27,8 +27,6 @@ type SendDto {
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
   id: String!
   name: String!
   gender: String!
@@ -46,6 +44,23 @@ type Auth {
   user: User!
 }
 
+type Dev {
+  id: String!
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+  role: String!
+  status: String!
+}
+
+type AuthorizationPayload {
+  dev: Dev!
+  type: String!
+  access_token: String!
+  refresh_token: String!
+}
+
 type Query {
   findAllItems: [Item!]!
   findItem(id: String!): Item!
@@ -54,6 +69,8 @@ type Query {
   findUserByEmail(email: String!): User!
   getAllWarehouse: [Warehouse!]!
   getOneWarehouse(id: String!): Warehouse!
+  findAllDevs: [Dev!]!
+  findOneDev(id: String!): Dev!
   findItemWarehouse(id: String!): ItemWarehouse!
   findAllItemWarehouse: [ItemWarehouse!]!
   findWarehouseWithAllItems(id: String!): [ItemWarehouse!]!
@@ -68,11 +85,17 @@ type Mutation {
   refreshTokens: Auth!
   logout: SendDto!
   createUser(user: CreateUserDto!): User!
-  updateUser(updateUser: UpdateUserDto!): User!
+  updateUser: User!
   removeUser(id: Float!): User!
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
   updateWarehouse(warehouse: UpdateWarehouseInput!): Warehouse!
   deleteWarehouse(id: String!): SendDto!
+  registrationDev(createDev: CreateDevDto!): AuthorizationPayload!
+  loginDev(loginDto: LoginDevDto!): AuthorizationPayload!
+  refreshDevToken(refresh_token: String!): AuthorizationPayload!
+  createDev(createDev: CreateDevDto!): Dev!
+  updateDev(updateDev: UpdateDevDto!): Dev!
+  removeDev(id: String!): SendDto!
   createItemWarehouse(itemWarehouse: CreateItemWarehouseDTO!): ItemWarehouse!
   updateItemWarehouse(updateItemWarehouse: UpdateItemWarehouseDTO!): ItemWarehouse!
   deleteItemWarehouse(id: String!): SendDto!
@@ -100,15 +123,6 @@ input CreateUserDto {
   role: String!
 }
 
-input UpdateUserDto {
-  name: String
-  gender: String
-  email: String
-  password: String
-  role: String
-  id: Int!
-}
-
 input CreateWarehouseInput {
   name: String!
 }
@@ -116,6 +130,28 @@ input CreateWarehouseInput {
 input UpdateWarehouseInput {
   id: String!
   name: String!
+}
+
+input CreateDevDto {
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+  role: String!
+}
+
+input LoginDevDto {
+  email: String!
+  password: String!
+}
+
+input UpdateDevDto {
+  name: String!
+  gender: String!
+  email: String!
+  password: String!
+  role: String!
+  id: String!
 }
 
 input CreateItemWarehouseDTO {

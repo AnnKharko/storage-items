@@ -27,9 +27,9 @@ export class UserResolver {
     return this.userService.create(user);
   }
 
-  @Mutation(() => User)
-  updateUser(@Args('updateUser') updateUser: UpdateUserDto) {
-    return this.userService.update(updateUser.id, updateUser);
+  @Mutation(() => User, { name: 'updateUser' })
+  updateUser(updateUser: UpdateUserDto) {
+    return this.userService.update(updateUser);
   }
 
   @Mutation(() => User)

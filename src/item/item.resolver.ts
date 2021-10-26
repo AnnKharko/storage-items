@@ -13,6 +13,7 @@ export class ItemResolver {
   constructor(private itemService: ItemService) {}
 
   @Query(() => [Item], { name: 'findAllItems' })
+  @UseGuards(AuthGuard)
   findAll() {
     return this.itemService.findAll();
   }
