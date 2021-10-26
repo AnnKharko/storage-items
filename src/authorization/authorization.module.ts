@@ -6,8 +6,7 @@ import { DevModule } from '../dev/dev.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TokensService } from './tokens.service';
 import { DevJwtGuard } from './guards/dev.jwt.guard';
-import { JwtStrategy } from './strategy/dev.jwt.strategy';
-// import { jwtConfig } from '../../configs/jwt.config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -18,9 +17,19 @@ import { JwtStrategy } from './strategy/dev.jwt.strategy';
         expiresIn: '5m',
       },
     }),
+    // JwtModule.registerAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     secret: configService.get('JWT_ACCESS_SECRET'),
+    //     signOptions: {
+    //       expiresIn: configService.get('JWT_ACCESS_LIFETIME'),
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
     DevModule,
   ],
-  providers: [AuthorizationResolver, TokensService, JwtStrategy, DevJwtGuard],
+  providers: [AuthorizationResolver, TokensService, DevJwtGuard],
   exports: [TokensService],
 })
 export class AuthorizationModule {}

@@ -115,7 +115,6 @@ export class TokensService {
   ): Promise<{ access_token: string; dev: Dev }> {
     const { dev } = await this.resolveRefreshToken(refresh_token);
     const access_token = await this.generateAccessToken(dev);
-    // const refresh_token = await this.generateRefreshToken(dev, ttl )
     return { dev, access_token };
   }
 

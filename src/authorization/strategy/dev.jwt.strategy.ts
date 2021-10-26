@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { DevService } from '../../dev/dev.service';
 import { ConfigService } from '@nestjs/config';
 import { Dev } from '../../dev/entities/dev.entity';
-import { LockNotSupportedOnGivenDriverError } from 'typeorm';
+// import { LockNotSupportedOnGivenDriverError } from 'typeorm';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
