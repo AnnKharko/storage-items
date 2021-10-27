@@ -31,4 +31,8 @@ export class User {
   @Field(() => String)
   @Column({ default: 'pending' })
   status: string;
+
+  @Field(() => String)
+  @Column({ select: false, nullable: true })
+  confirm_token?: string;
 }

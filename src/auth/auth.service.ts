@@ -1,8 +1,4 @@
-import {
-  HttpException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { UserService } from '../user/user.service';
 import { Repository } from 'typeorm';
@@ -16,6 +12,7 @@ import { TokenService } from './token/token.service';
 import { CreateUserDto } from '../user/dto/create-user.input';
 import { User } from '../user/entities/user.entity';
 import { SendDto } from '../send.dto';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +21,7 @@ export class AuthService {
     private configService: ConfigService,
     private jwtService: JwtService,
     private tokensService: TokenService,
+    private mailService: MailService,
     @InjectRepository(Auth) private authRepository: Repository<Auth>,
   ) {}
 
@@ -44,14 +42,33 @@ export class AuthService {
     return await this.authRepository.save(auth);
   }
 
-  async registration(userDto: CreateUserDto) {
-    const user = await this.userService.create(userDto);
-    const tokens = this.tokensService.createTokens();
-    const auth = await this.authRepository.create({
-      ...tokens,
-      userId: user.id,
+  async registration(userDto: CreateUserDto): Promise<SendDto> {
+    const confirm_token = this.tokensService.createConfirmToken();
+    const user = await this.userService.create(userDto, confirm_token);
+
+    // const tokens = this.tokensService.createTokens();
+    // const auth = await this.authRepository.create({
+    //   ...tokens,
+    //   userId: user.id,
+    // });
+    // return await this.authRepository.save(auth);
+    await this.mailService.sendUserConfirmation(user, confirm_token);
+    return {
+      message: `Check your email ${user.email} to continue registration`,
+    };
+  }
+
+  async confirmUser(token: string) {
+    const user = await this.userService.findUserForConfirm(token);
+    if (!user) {
+      throw new GraphQLError('Such token not exist');
+    }
+    await this.userService.updateConfirm({
+      id: user.id,
+      status: 'confirmed',
+      confirm_token: null,
     });
-    return await this.authRepository.save(auth);
+    return await this.userService.findOne(user.id);
   }
 
   async refreshTokens(tokenId: string, user: User) {
@@ -96,20 +113,4 @@ export class AuthService {
       status: 200,
     };
   }
-
-  // create(CreateAuthDto: CreateAuthDto) {
-  //   return 'This action adds a new auth';
-  // }
-  //
-  // findAll() {
-  //   return `This action returns all auth`;
-  // }
-  //
-  // findOne(id: number) {
-  //   return `This action returns a #${id} auth`;
-  // }
-  //
-  // remove(id: number) {
-  //   return `This action removes a #${id} auth`;
-  // }
 }

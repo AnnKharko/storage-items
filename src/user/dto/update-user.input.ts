@@ -3,21 +3,24 @@ import { InputType, Field, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-  @Field()
+  @Field(() => String)
   id: string;
 
-  @Field()
+  @Field(() => String)
   name?: string;
 
-  @Field()
+  @Field(() => String)
   gender?: string;
 
-  @Field()
+  @Field(() => String)
   email?: string;
 
-  @Field()
+  @Field(() => String)
   password?: string;
 
-  @Field()
+  @Field(() => String)
   role?: string;
+
+  @Field(() => String)
+  status?: string;
 }

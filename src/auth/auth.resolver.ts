@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { Auth } from './entities/auth.entity';
 import { LoginDto } from './dto/login.dto';
@@ -8,6 +8,7 @@ import { UseGuards } from '@nestjs/common';
 import { RefreshGuard } from './guards/refresh.guard';
 import { SendDto } from '../send.dto';
 import { AuthGuard } from './guards/auth.guard';
+import { User } from '../user/entities/user.entity';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -18,7 +19,7 @@ export class AuthResolver {
     return this.authService.login(loginDto);
   }
 
-  @Mutation(() => Auth, { name: 'registration' })
+  @Mutation(() => SendDto, { name: 'registration' })
   registration(@Args('userDto') userDto: CreateUserDto) {
     return this.authService.registration(userDto);
   }
@@ -33,5 +34,9 @@ export class AuthResolver {
   @UseGuards(AuthGuard)
   logout(@Context() ctx): Promise<SendDto> {
     return this.authService.logout(ctx.tokenId);
+  }
+  @Mutation(() => User, { name: 'confirmUser' })
+  confirmUser(@Args('token') token: string) {
+    return this.authService.confirmUser(token);
   }
 }

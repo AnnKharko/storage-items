@@ -12,6 +12,7 @@ import { ItemWarehouseModule } from './item-warehouse/item-warehouse.module';
 // import { JwtModule } from "@nestjs/jwt";
 import { DevModule } from './dev/dev.module';
 import { AuthorizationModule } from './authorization/authorization.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { AuthorizationModule } from './authorization/authorization.module';
     AuthModule,
     DevModule,
     AuthorizationModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

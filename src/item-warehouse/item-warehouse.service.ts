@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ItemWarehouse } from './entities/itemWarehouse.entity';
 import { Repository } from 'typeorm';
 import { CreateItemWarehouseDTO } from './dto/create-item-werehouse';
-import { GraphQLError } from 'graphql';
+// import { GraphQLError } from 'graphql';
 import { UpdateItemWarehouseDTO } from './dto/update-itemwarehouse';
 import { SendDto } from '../send.dto';
 

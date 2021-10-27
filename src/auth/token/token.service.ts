@@ -30,4 +30,13 @@ export class TokenService {
       refresh_token,
     };
   }
+  createConfirmToken() {
+    return this.jwtService.sign(
+      {},
+      {
+        secret: this.configService.get('JWT_CONFIRM_SECRET'),
+        expiresIn: this.configService.get('JWT_CONFIRM_LIFETIME'),
+      },
+    );
+  }
 }

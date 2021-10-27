@@ -34,6 +34,7 @@ type User {
   password: String!
   role: String!
   status: String!
+  confirm_token: String!
 }
 
 type Auth {
@@ -81,10 +82,10 @@ type Mutation {
   updateItem(updateItem: UpdateItemInputDTO!): Item!
   deleteItem(id: String!): SendDto!
   login(loginDto: LoginDto!): Auth!
-  registration(userDto: CreateUserDto!): Auth!
+  registration(userDto: CreateUserDto!): SendDto!
   refreshTokens: Auth!
   logout: SendDto!
-  createUser(user: CreateUserDto!): User!
+  confirmUser(token: String!): User!
   updateUser: User!
   removeUser(id: Float!): User!
   createWarehouse(warehouse: CreateWarehouseInput!): Warehouse!
@@ -121,6 +122,7 @@ input CreateUserDto {
   email: String!
   password: String!
   role: String!
+  status: String = "pending"
 }
 
 input CreateWarehouseInput {
