@@ -12,7 +12,8 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
       useFactory: async (config: ConfigService) => ({
         transport: {
           host: config.get('MAIL_HOST'),
-          secure: false,
+          port: 465,
+          secure: true,
           auth: {
             user: config.get('MAIL_USER'),
             pass: config.get('MAIL_PASSWORD'),
@@ -22,11 +23,11 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           from: `"No Reply" <${config.get('MAIL_FROM')}>`,
         },
         template: {
-          // dir: join(__dirname, 'templates'),
-          dir: '/Users/macbooc/WebstormProjects/storage-items/dist/templates',
+          dir: join(__dirname, '/../../templates'),
+          // dir: '/Users/macbooc/WebstormProjects/storage-items/dist/templates',
           adapter: new HandlebarsAdapter(),
           options: {
-            strict: false,
+            strict: true,
           },
         },
       }),

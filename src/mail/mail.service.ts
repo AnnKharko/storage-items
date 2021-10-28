@@ -1,25 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../user/entities/user.entity';
 import { MailerService } from '@nestjs-modules/mailer';
-import { resolve } from 'path';
+import templatesInfo from '../templates';
+import { ConfigService } from '@nestjs/config';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
 export class MailService {
-  constructor(private mailerService: MailerService) {}
+  constructor(
+    private mailerService: MailerService,
+    private configService: ConfigService,
+  ) {}
 
-  async sendUserConfirmation(user: User, token: string) {
-    const url = `http://localhost:3000/auth/confirm?token=${token}`;
+  contextExtension = {
+    frontendUrl: this.configService.get('FRONTEND_URL'),
+  };
 
-    console.log(__dirname);
-
-    await this.mailerService.sendMail({
-      to: user.email,
-      subject: 'Welcome to Nice App! Confirm your Email',
-      template: 'confirmation', // resolve(__dirname, 'templates', 'confirmation'),
-      context: {
-        name: user.name,
-        url,
-      },
-    });
+  async sendUserMail(email, action, context) {
+    try {
+      const templateInfo = templatesInfo[action];
+      Object.assign(context, this.contextExtension);
+      await this.mailerService.sendMail({
+        to: email,
+        subject: templateInfo.subject,
+        template: templateInfo.templateName,
+        context,
+      });
+    } catch (e) {
+      throw new GraphQLError(e.message);
+    }
   }
 }

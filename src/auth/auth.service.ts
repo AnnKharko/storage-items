@@ -13,6 +13,7 @@ import { CreateUserDto } from '../user/dto/create-user.input';
 import { User } from '../user/entities/user.entity';
 import { SendDto } from '../send.dto';
 import { MailService } from '../mail/mail.service';
+import { emailActionEnum } from '../../constants';
 
 @Injectable()
 export class AuthService {
@@ -52,7 +53,14 @@ export class AuthService {
     //   userId: user.id,
     // });
     // return await this.authRepository.save(auth);
-    await this.mailService.sendUserConfirmation(user, confirm_token);
+    // await this.mailService.sendUserConfirmation(user, confirm_token);
+    const url = `${this.configService.get(
+      'FRONTEND_URL',
+    )}/auth/confirm?token=${confirm_token}`;
+    await this.mailService.sendUserMail(user.email, emailActionEnum.CONFIRM, {
+      name: user.name,
+      url,
+    });
     return {
       message: `Check your email ${user.email} to continue registration`,
     };
@@ -67,6 +75,9 @@ export class AuthService {
       id: user.id,
       status: 'confirmed',
       confirm_token: null,
+    });
+    await this.mailService.sendUserMail(user.email, emailActionEnum.WELCOME, {
+      name: user.name,
     });
     return await this.userService.findOne(user.id);
   }

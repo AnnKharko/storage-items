@@ -10,4 +10,5 @@ export default () => ({
   MAIL_USER: process.env.MAIL_USER,
   MAIL_PASSWORD: process.env.MAIL_PASSWORD,
   MAIL_FROM: process.env.MAIL_FROM,
+  FRONTEND_URL: process.env.FRONTEND_URL,
 });
