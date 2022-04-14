@@ -14,6 +14,7 @@ import { DevModule } from './dev/dev.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 import { MailModule } from './mail/mail.module';
 import { ChatModule } from './chat/chat.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ChatModule } from './chat/chat.module';
     AuthorizationModule,
     MailModule,
     ChatModule,
+    NotificationModule,
   ],
   controllers: [],
   providers: [],
