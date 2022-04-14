@@ -1,1 +1,3 @@
 'test'
+'fhfhfhfh'
+{something: 'new'}
