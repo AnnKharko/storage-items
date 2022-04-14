@@ -13,6 +13,7 @@ import { ItemWarehouseModule } from './item-warehouse/item-warehouse.module';
 import { DevModule } from './dev/dev.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 import { MailModule } from './mail/mail.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MailModule } from './mail/mail.module';
     DevModule,
     AuthorizationModule,
     MailModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],
